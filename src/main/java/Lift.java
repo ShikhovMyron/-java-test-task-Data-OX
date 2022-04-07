@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,33 +8,39 @@ public class Lift {
     private List<Passenger> passengers;
     private int currentFloor = 0;
 
+
+
     public Lift(int maxPassengersCount, Building building) {
         this.maxPassengersCount = maxPassengersCount;
-        this.passengers = List.of();
+        this.passengers = new ArrayList<>();
         this.building = building;
     }
 
-    public void move(){
-        while (true){
-
-//            if(!isLiftFull() && isCurrentFloorHasPassengers()){
-
+    public void move() {
+        List<Passenger> passengers = new ArrayList<>();
+        if (isNeededFloor()) {
+            passengers.addAll(passengerQuit(currentFloor));
         }
+        while (!isLiftFull() && isCurrentFloorHasPassengers()) {
+            Passenger passenger = building.getFirstPassenger(currentFloor);
+            if (passenger != null) {
+                passengerEntered(passenger);
+                building.removePassenger(currentFloor, passenger);
+                passengers.add(passenger);
+            }
+        }
+        if (!passengers.isEmpty()) {
+            building.movePassengers(passengers);
+        }
+
+        currentFloor++;
     }
 
 
-    private boolean isLiftFull(){
-        return passengers.size() == maxPassengersCount;
-    }
-
-    private boolean isCurrentFloorHasPassengers(){
-       return  !building.getFloor(currentFloor).isEmpty();
-    }
-
-    public boolean passengerEntered(Passenger passenger) {
-        if (passengers.size() < maxPassengersCount) {
-            return passengers.add(passenger);
-        } else return false;
+    public void passengerEntered(Passenger passenger) {
+        if (passengers.size() < maxPassengersCount && passenger != null) {
+            passengers.add(passenger);
+        }
     }
 
     public List<Passenger> passengerQuit(int currentFloor) {
@@ -42,5 +49,17 @@ public class Lift {
                 .collect(Collectors.toList());
         passengers.removeAll(passengersToQuit);
         return passengersToQuit;
+    }
+
+    private boolean isLiftFull() {
+        return passengers.size() == maxPassengersCount;
+    }
+
+    private boolean isCurrentFloorHasPassengers() {
+        return !building.getFloor(currentFloor).isEmpty();
+    }
+
+    private boolean isNeededFloor() {
+        return passengers.stream().anyMatch(s -> s.getNeededFloor() == currentFloor);
     }
 }

@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.List;
 
 public class Building {
     private final int floorsCount;
@@ -16,8 +16,12 @@ public class Building {
         floors[floorNumber].addPassenger(passenger);
     }
 
-    public void removePassenger(int floor, Passenger passenger) {
-        floors[floor].removePassenger(passenger);
+    public Passenger getFirstPassenger(int floorNumber) {
+        return floors[floorNumber].getFirstPassenger();
+    }
+
+    public void removePassenger(int floorNumber, Passenger passenger) {
+        floors[floorNumber].removePassenger(passenger);
     }
 
     public Floor getFloor(int floorNumber) {
@@ -26,6 +30,13 @@ public class Building {
 
     public int getFloorsCount() {
         return floorsCount;
+    }
+
+    public void movePassengers(List<Passenger> passengers) {
+        for (Passenger passenger : passengers) {
+            int randomFloorNumber = Utils.getRandomNumber(0, floorsCount);
+            putPassenger(randomFloorNumber, passenger);
+        }
     }
 }
 
