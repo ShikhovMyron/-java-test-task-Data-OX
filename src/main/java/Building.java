@@ -16,8 +16,10 @@ public class Building {
         floors[floorNumber].addPassenger(passenger);
     }
 
-    public Passenger getFirstPassenger(int floorNumber) {
-        return floors[floorNumber].getFirstPassenger();
+    public Passenger getFirstCorrectPassenger(int floorNumber, boolean isUp) {
+        return floors[floorNumber].getPassengers().stream()
+                .filter(s -> s.getNeededFloor() > floorNumber == isUp)
+                .findFirst().orElse(null);
     }
 
     public void removePassenger(int floorNumber, Passenger passenger) {
@@ -34,7 +36,7 @@ public class Building {
 
     public void movePassengers(List<Passenger> passengers) {
         for (Passenger passenger : passengers) {
-            int randomFloorNumber = Utils.getRandomNumber(0, floorsCount);
+            int randomFloorNumber = Utils.getRandomNumber(0, floorsCount - 1);
             putPassenger(randomFloorNumber, passenger);
         }
     }

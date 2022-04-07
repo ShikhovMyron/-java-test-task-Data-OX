@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class Passenger {
-    private final String name ;
+    private final String name;
     private final long creationTime;
     private final int neededFloor;
 
