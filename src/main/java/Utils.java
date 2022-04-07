@@ -10,7 +10,7 @@ public class Utils {
         }
     }
 
-    private static int getRandomNumber(int min, int max) {
+    public static int getRandomNumber(int min, int max) {
         return new Random().nextInt(max+1-min)+min;
     }
 

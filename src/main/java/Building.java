@@ -1,12 +1,10 @@
 public class Building {
     private final int floorsCount;
     private final Floor[] floors;
-    private final Lift lift;
 
-    public Building(int floorsCount, Lift lift) {
+    public Building(int floorsCount) {
         this.floorsCount = floorsCount;
         this.floors = new Floor[floorsCount];
-        this.lift = lift;
     }
 
     public void putPassenger(int floor, Passenger passenger) {
