@@ -37,6 +37,12 @@ public class Building {
     public void movePassengers(List<Passenger> passengers) {
         for (Passenger passenger : passengers) {
             int randomFloorNumber = Utils.getRandomNumber(0, floorsCount - 1);
+            int randomFloorNumberNeeded = Utils.getRandomNumber(0, floorsCount - 1);
+            while (randomFloorNumberNeeded == randomFloorNumber) {
+                randomFloorNumberNeeded = Utils.getRandomNumber(0, floorsCount - 1);
+            }
+
+            passenger.setNeededFloor(randomFloorNumberNeeded);
             putPassenger(randomFloorNumber, passenger);
         }
     }

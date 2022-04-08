@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 public class Application {
     public static void main(String[] args) throws InterruptedException {
         Building building = new Building(Utils.getRandomNumber(5, 20));
@@ -5,7 +7,7 @@ public class Application {
         Lift lift = new Lift(5, building);
         while (true) {
             lift.work();
-//            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(1000);
         }
     }
 
