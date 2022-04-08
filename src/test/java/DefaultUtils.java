@@ -7,7 +7,11 @@ public class DefaultUtils {
     ) {
         Building building = new Building(floorsCount);
         for (int i = 0; i < floorsNumberSpawn.length; i++) {
-            building.putPassenger(floorsNumberSpawn[i], passengers.get(i));
+            try {
+                building.putPassenger(floorsNumberSpawn[i], passengers.get(i));
+            } catch (InvalidParameterException e) {
+                e.printStackTrace();
+            }
         }
         return building;
     }

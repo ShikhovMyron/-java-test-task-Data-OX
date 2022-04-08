@@ -5,10 +5,14 @@ public class ConsoleWriter {
     public static void writeCurrentInfo(Building building, List<Passenger> passengers, int currentFloor, boolean isUp) {
         System.out.println("***************************************************************************************");
         for (int i = building.getFloorsCount() - 1; i >= 0; i--) {
-            System.out.printf(
-                    "%1$2s(f)  |%2$2s \uD83D\uDD74️\u200D️  "
-                    , i
-                    , building.getFloor(i).getPassengers().size());
+            try {
+                System.out.printf(
+                        "%1$2s(f)  |%2$2s \uD83D\uDD74️\u200D️  "
+                        , i
+                        , building.getFloor(i).getPassengers().size());
+            } catch (InvalidParameterException e) {
+                e.printStackTrace();
+            }
             if (i == currentFloor) {
                 if (isUp) {
                     System.out.print("^|");

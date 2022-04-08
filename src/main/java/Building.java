@@ -12,22 +12,38 @@ public class Building {
         }
     }
 
-    public void putPassenger(int floorNumber, Passenger passenger) {
-        floors[floorNumber].addPassenger(passenger);
+    public void putPassenger(int floorNumber, Passenger passenger) throws InvalidParameterException {
+        if (floorNumber >= 0 && floorNumber < floorsCount && passenger != null) {
+            floors[floorNumber].addPassenger(passenger);
+        }else {
+            throw new InvalidParameterException();
+        }
     }
 
-    public Passenger getFirstCorrectPassenger(int floorNumber, boolean isUp) {
-        return floors[floorNumber].getPassengers().stream()
-                .filter(s -> s.getNeededFloor() > floorNumber == isUp)
-                .findFirst().orElse(null);
+    public Passenger getFirstCorrectPassenger(int floorNumber, boolean isUp) throws InvalidParameterException {
+        if (floorNumber >= 0 && floorNumber < floorsCount) {
+            return floors[floorNumber].getPassengers().stream()
+                    .filter(s -> s.getNeededFloor() > floorNumber == isUp)
+                    .findFirst().orElse(null);
+        }else {
+            throw new InvalidParameterException(String.valueOf(floorNumber));
+        }
     }
 
-    public void removePassenger(int floorNumber, Passenger passenger) {
-        floors[floorNumber].removePassenger(passenger);
+    public void removePassenger(int floorNumber, Passenger passenger) throws InvalidParameterException {
+        if (floorNumber >= 0 && floorNumber < floorsCount && passenger != null) {
+            floors[floorNumber].removePassenger(passenger);
+        }else {
+            throw new InvalidParameterException();
+        }
     }
 
-    public Floor getFloor(int floorNumber) {
-        return floors[floorNumber];
+    public Floor getFloor(int floorNumber) throws InvalidParameterException {
+        if (floorNumber >= 0 && floorNumber < floorsCount) {
+            return floors[floorNumber];
+        }else {
+            throw new InvalidParameterException(String.valueOf(floorNumber));
+        }
     }
 
     public int getFloorsCount() {
@@ -43,7 +59,11 @@ public class Building {
             }
 
             passenger.setNeededFloor(randomFloorNumberNeeded);
-            putPassenger(randomFloorNumber, passenger);
+            try {
+                putPassenger(randomFloorNumber, passenger);
+            } catch (InvalidParameterException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

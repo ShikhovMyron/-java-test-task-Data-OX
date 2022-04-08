@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class LiftTest {
 
     @Test
-    public void workBaseTest() {
+    public void workBaseTest() throws InvalidParameterException {
         // Arrange
         List<Passenger> expected = DefaultUtils.getPassengers(new int[]{5, 5, 7, 3});
         ArgumentCaptor<Passenger> captor = ArgumentCaptor.forClass(Passenger.class);
@@ -30,7 +30,7 @@ public class LiftTest {
     }
 
     @Test // лифт должен проехать вверх-вниз поссле чего отвезди пассажира на нужный этаж
-    public void workLongDistanceTest() {
+    public void workLongDistanceTest() throws InvalidParameterException {
         // Arrange
         int floorSpawn = 0;
         int neededFloor = 1;
@@ -52,7 +52,7 @@ public class LiftTest {
     }
 
     @Test
-    public void workMaxPassengersCountTest() {
+    public void workMaxPassengersCountTest() throws InvalidParameterException {
         // Arrange
         int maxPassengersCount = 3;
         ArgumentCaptor<Passenger> captorPassenger = ArgumentCaptor.forClass(Passenger.class);
@@ -69,7 +69,7 @@ public class LiftTest {
     }
 
     @Test
-    public void workMaxFloorNumberTest() {
+    public void workMaxFloorNumberTest() throws InvalidParameterException {
         // Arrange
         ArgumentCaptor<Passenger> captorPassenger = ArgumentCaptor.forClass(Passenger.class);
         List<Passenger> expected = DefaultUtils.getPassengers(new int[]{1, 2, 6});
@@ -90,7 +90,7 @@ public class LiftTest {
     }
 
     @Test
-    public void workNotFullLiftTest() {
+    public void workNotFullLiftTest() throws InvalidParameterException {
         // Arrange
         ArgumentCaptor<Passenger> captorPassenger = ArgumentCaptor.forClass(Passenger.class);
         List<Passenger> expected = DefaultUtils.getPassengers(new int[]{2, 2, 4, 5});
@@ -115,7 +115,7 @@ public class LiftTest {
     }
 
     @Test
-    public void workFullLiftTest() {
+    public void workFullLiftTest() throws InvalidParameterException {
         // Arrange
         ArgumentCaptor<Passenger> captorPassenger = ArgumentCaptor.forClass(Passenger.class);
         List<Passenger> expected = DefaultUtils.getPassengers(new int[]{2, 2, 4, 5});

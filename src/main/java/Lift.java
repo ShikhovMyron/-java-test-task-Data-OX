@@ -11,6 +11,7 @@ public class Lift {
     private boolean isUp = true;
 
     public Lift(int maxPassengersCount, Building building) {
+
         this.maxPassengersCount = maxPassengersCount;
         this.passengers = new ArrayList<>();
         this.building = building;
@@ -64,13 +65,17 @@ public class Lift {
     }
 
     private void addPassengersIfPossible() {
-        while (!isLiftFull() && isCurrentFloorHasCorrectPassengers()) {
-            Passenger passenger = building.getFirstCorrectPassenger(currentFloor, isUp);
-            if (passenger != null) {
-                if (passengerEntered(passenger)) {
-                    building.removePassenger(currentFloor, passenger);
+        try {
+            while (!isLiftFull() && isCurrentFloorHasCorrectPassengers()) {
+                Passenger passenger = building.getFirstCorrectPassenger(currentFloor, isUp);
+                if (passenger != null) {
+                    if (passengerEntered(passenger)) {
+                        building.removePassenger(currentFloor, passenger);
+                    }
                 }
             }
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
         }
     }
 
@@ -86,7 +91,7 @@ public class Lift {
         return passengers.size() == maxPassengersCount;
     }
 
-    private boolean isCurrentFloorHasCorrectPassengers() {
+    private boolean isCurrentFloorHasCorrectPassengers() throws InvalidParameterException {
         return building.getFirstCorrectPassenger(currentFloor, isUp) != null;
     }
 
