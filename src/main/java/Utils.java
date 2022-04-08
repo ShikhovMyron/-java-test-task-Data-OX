@@ -9,7 +9,7 @@ public class Utils {
                 while (randomNumber == i) {
                     randomNumber = getRandomNumber(0, building.getFloorsCount() - 1);
                 }
-                building.putPassenger(i, new Passenger("", randomNumber));
+                building.putPassenger(i, new Passenger(randomNumber));
             }
         }
     }

@@ -14,12 +14,12 @@ public class Lift {
         this.maxPassengersCount = maxPassengersCount;
         this.passengers = new ArrayList<>();
         this.building = building;
-        maxFloor = building.getFloorsCount()-1;
+        maxFloor = building.getFloorsCount() - 1;
     }
 
     public void work() {
-        checkNextStep();
         move();
+        checkNextStep();
         ConsoleWriter.writeCurrentInfo(building, this.passengers, currentFloor, isUp);
 
         if (isUp) {
@@ -29,41 +29,29 @@ public class Lift {
         }
     }
 
-    private void checkNextStep() {
-        if (isUp) {
-            if (currentFloor == maxFloor || currentFloor == building.getFloorsCount() - 1) {
-                isUp = false;
-            }
-        } else {
-            if (currentFloor == 0) {
-                isUp = true;
-            }
-        }
-    }
-
     private void move() {
         List<Passenger> passengers = new ArrayList<>();
         if (isNeededFloor()) {
             passengers.addAll(passengerQuit(currentFloor));
         }
-        while (!isLiftFull() && isCurrentFloorHasCorrectPassengers()) {
-            Passenger passenger = building.getFirstCorrectPassenger(currentFloor, isUp);
-            if (passenger != null) {
-                passengerEntered(passenger);
-                building.removePassenger(currentFloor, passenger);
-            }
-        }
+        addPassengersIfPossible();
         if (!passengers.isEmpty()) {
             building.movePassengers(passengers);
         }
-        getMaxNeededFloor();
-
-
+        setMaxNeededFloor();
     }
 
-    private void passengerEntered(Passenger passenger) {
-        if (passengers.size() < maxPassengersCount && passenger != null) {
-            passengers.add(passenger);
+    private void checkNextStep() {
+        if (isUp) {
+            if (currentFloor == maxFloor || currentFloor == building.getFloorsCount() - 1) {
+                isUp = false;
+                addPassengersIfPossible();
+            }
+        } else {
+            if (currentFloor == 0) {
+                isUp = true;
+                addPassengersIfPossible();
+            }
         }
     }
 
@@ -73,6 +61,25 @@ public class Lift {
                 .collect(Collectors.toList());
         passengers.removeAll(passengersToQuit);
         return passengersToQuit;
+    }
+
+    private void addPassengersIfPossible() {
+        while (!isLiftFull() && isCurrentFloorHasCorrectPassengers()) {
+            Passenger passenger = building.getFirstCorrectPassenger(currentFloor, isUp);
+            if (passenger != null) {
+                if (passengerEntered(passenger)) {
+                    building.removePassenger(currentFloor, passenger);
+                }
+            }
+        }
+    }
+
+    public boolean passengerEntered(Passenger passenger) {
+        if (passengers.size() < maxPassengersCount && passenger != null) {
+            passengers.add(passenger);
+            return true;
+        }
+        return false;
     }
 
     private boolean isLiftFull() {
@@ -88,10 +95,10 @@ public class Lift {
     }
 
 
-    private void getMaxNeededFloor() {
+    private void setMaxNeededFloor() {
         maxFloor = passengers.stream()
                 .map(Passenger::getNeededFloor)
-                .max(Integer::compareTo).orElse(building.getFloorsCount() - 1);
+                .max(Integer::compareTo).orElse(maxFloor);
     }
 
 }

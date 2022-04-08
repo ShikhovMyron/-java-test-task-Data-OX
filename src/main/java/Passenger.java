@@ -2,23 +2,17 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Passenger {
-    private final String name;
     private final long randomLong;
-
-    public void setNeededFloor(int neededFloor) {
-        this.neededFloor = neededFloor;
-    }
 
     private int neededFloor;
 
-    public Passenger(String name, int neededFloor) {
-        this.name = name;
+    public Passenger(int neededFloor) {
         this.neededFloor = neededFloor;
         this.randomLong = new Random().nextLong();
     }
 
-    public String getName() {
-        return name;
+    public void setNeededFloor(int neededFloor) {
+        this.neededFloor = neededFloor;
     }
 
     public long getRandomLong() {
@@ -34,19 +28,18 @@ public class Passenger {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Passenger passenger = (Passenger) o;
-        return randomLong == passenger.randomLong && name.equals(passenger.name);
+        return randomLong == passenger.randomLong;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, randomLong);
+        return Objects.hash(randomLong);
     }
 
     @Override
     public String toString() {
         return "Passenger{" +
-                "name='" + name + '\'' +
-                ", randomLong=" + randomLong +
+                "randomLong=" + randomLong +
                 ", neededFloor=" + neededFloor +
                 '}';
     }

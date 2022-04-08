@@ -2,7 +2,7 @@ import java.util.List;
 
 public class ConsoleWriter {
 
-    public static void writeCurrentInfo(Building building, List<Passenger> passengers, int currentFloor,boolean isUp) {
+    public static void writeCurrentInfo(Building building, List<Passenger> passengers, int currentFloor, boolean isUp) {
         System.out.println("***************************************************************************************");
         for (int i = building.getFloorsCount() - 1; i >= 0; i--) {
             System.out.printf(
