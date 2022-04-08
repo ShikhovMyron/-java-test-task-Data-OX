@@ -23,4 +23,15 @@ public class DefaultUtils {
         }
         return passengers;
     }
+
+    public static int getSummaryPassengersCount(Building building) {
+        int count = 0;
+        for (int i = 0; i < building.getFloorsCount(); i++) {
+            try {
+                count += building.getFloor(i).getPassengers().size();
+            } catch (InvalidParameterException ignore) {
+            }
+        }
+        return count;
+    }
 }

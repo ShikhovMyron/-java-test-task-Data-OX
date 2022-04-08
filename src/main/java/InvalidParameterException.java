@@ -4,6 +4,6 @@ public class InvalidParameterException extends Exception {
     }
 
     public InvalidParameterException(String message) {
-        super("Invalid parameter: "+message);
+        super("Invalid parameter: " + message);
     }
 }

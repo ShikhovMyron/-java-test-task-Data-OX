@@ -37,7 +37,11 @@ public class Lift {
         }
         addPassengersIfPossible();
         if (!passengers.isEmpty()) {
-            building.movePassengers(passengers);
+            try {
+                building.movePassengers(passengers);
+            } catch (InvalidParameterException e) {
+                e.printStackTrace();
+            }
         }
         setMaxNeededFloor();
     }
@@ -68,10 +72,10 @@ public class Lift {
         try {
             while (!isLiftFull() && isCurrentFloorHasCorrectPassengers()) {
                 Passenger passenger = building.getFirstCorrectPassenger(currentFloor, isUp);
-                if (passenger != null) {
-                    if (passengerEntered(passenger)) {
-                        building.removePassenger(currentFloor, passenger);
-                    }
+                if (isPassengerValid(passenger) && passengerEntered(passenger)) {
+                    building.removePassenger(currentFloor, passenger);
+                } else {
+                    throw new InvalidParameterException(passenger.toString());
                 }
             }
         } catch (InvalidParameterException e) {
@@ -85,6 +89,11 @@ public class Lift {
             return true;
         }
         return false;
+    }
+
+    private boolean isPassengerValid(Passenger passenger) {
+        return !(passenger == null ||
+                (passenger.getNeededFloor() < 0 || passenger.getNeededFloor() >= building.getFloorsCount()));
     }
 
     private boolean isLiftFull() {
