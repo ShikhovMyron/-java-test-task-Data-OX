@@ -1,3 +1,5 @@
+package com.lift.shykhov.exception;
+
 public class InvalidParameterException extends Exception {
     public InvalidParameterException() {
         super();

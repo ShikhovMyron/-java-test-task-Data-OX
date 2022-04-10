@@ -1,5 +1,13 @@
-import java.util.List;
+package com.lift.shykhov.entity;
 
+import com.lift.shykhov.exception.InvalidParameterException;
+import com.lift.shykhov.util.Utils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+// TODO Equals and hashcode for all entities
 public class Building {
     private final int floorsCount;
     private final Floor[] floors;
@@ -50,7 +58,7 @@ public class Building {
         return floorsCount;
     }
 
-    public void movePassengers(List<Passenger> passengers) throws InvalidParameterException {
+    public boolean movePassengers(List<Passenger> passengers) {
         if (passengers != null) {
             for (Passenger passenger : passengers) {
                 int randomFloorNumber = Utils.getRandomNumber(0, floorsCount - 1);
@@ -63,13 +71,29 @@ public class Building {
                 try {
                     putPassenger(randomFloorNumber, passenger);
                 } catch (InvalidParameterException e) {
-                    e.printStackTrace();
+                    return false;
                 }
             }
+            return true;
         } else {
-            throw new InvalidParameterException();
+            return false;
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return floorsCount == building.floorsCount && Arrays.equals(floors, building.floors);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(floorsCount);
+        result = 31 * result + Arrays.hashCode(floors);
+        return result;
     }
 
     private boolean isFloorNumberValid(int floorNumber) {

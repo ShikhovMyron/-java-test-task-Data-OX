@@ -1,3 +1,9 @@
+package com.lift.shykhov;
+
+import com.lift.shykhov.entity.Building;
+import com.lift.shykhov.entity.Passenger;
+import com.lift.shykhov.exception.InvalidParameterException;
+
 import java.util.ArrayList;
 import java.util.List;
 

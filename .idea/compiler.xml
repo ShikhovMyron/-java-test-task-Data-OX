@@ -7,15 +7,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="-java-test-task-Data-OX" />
+        <module name="java-test-task-Data-OX" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="-java-test-task-Data-OX" target="17" />
+      <module name="java-test-task-Data-OX" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="-java-test-task-Data-OX" options="" />
+      <module name="java-test-task-Data-OX" options="--add-modules java.base" />
     </option>
   </component>
 </project>
