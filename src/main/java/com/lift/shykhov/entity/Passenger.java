@@ -17,10 +17,6 @@ public class Passenger {
         this.neededFloor = neededFloor;
     }
 
-    public long getRandomLong() {
-        return randomLong;
-    }
-
     public int getNeededFloor() {
         return neededFloor;
     }

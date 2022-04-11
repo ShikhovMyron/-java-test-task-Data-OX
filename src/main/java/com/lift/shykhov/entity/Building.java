@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-// TODO Equals and hashcode for all entities
 public class Building {
     private final int floorsCount;
     private final Floor[] floors;
